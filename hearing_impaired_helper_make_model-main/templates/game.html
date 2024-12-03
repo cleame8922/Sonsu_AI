@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>수어 인식 게임</title>
+    <script>
+        function fetchQuestion() {
+            fetch('/get_question')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('question').innerText = "문제: " + data.question;
+                });
+        }
+    </script>
+</head>
+<body>
+    <h1>수어 인식 게임</h1>
+    <div>
+        <button onclick="fetchQuestion()">문제 생성</button>
+        <p id="question">문제를 생성하세요.</p>
+    </div>
+    <div>
+        <img id="videoFeed" src="/video_feed" style="width: 640px; height: 480px;">
+    </div>
+</body>
+</html>
