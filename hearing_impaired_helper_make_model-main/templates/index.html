@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>손수 잇다</title>
+    <script>
+        function startSignRecognition() {
+            // 비디오 피드 표시
+            const videoFeed = document.getElementById('videoFeed');
+            videoFeed.src = "/video_feed";
+            videoFeed.style.display = "block";
+        }
+    </script>
+</head>
+<body>
+    <h1>손수 잇다 수어 인식 시스템</h1>
+    <div>
+        <button onclick="startSignRecognition()">수어 인식 시작</button>
+    </div>
+    <div>
+        <img id="videoFeed" src="" style="width: 640px; height: 480px; display: none;">
+    </div>
+</body>
+</html>
