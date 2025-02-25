@@ -3,7 +3,9 @@ import mediapipe as mp
 import numpy as np
 import time, os
 
-actions = ['안녕하세요','사랑합니다','감사합니다']  # 학습할 수어 동작
+actions = ['어머니',
+    '아버지',
+    '동생']  # 학습할 수어 동작
 seq_length = 30  # 시퀀스 길이
 secs_for_action = 30  # 각 동작을 30초 동안 촬영
 
