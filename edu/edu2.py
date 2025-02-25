@@ -5,16 +5,21 @@ import tensorflow as tf
 from PIL import ImageFont, ImageDraw, Image
 
 # 모델 및 데이터 정보
-model_path = 'models/model.h5'  # 저장한 h5 파일 경로
+model_path = 'model.tflite'  # TFLite 모델 경로
 actions = ['안녕하세요', '사랑합니다', '감사합니다']  # 학습한 동작 리스트
 seq_length = 30  # 모델 학습 시 사용한 시퀀스 길이
 
-# 한글 폰트
+# 한글 폰트 설정
 font_path = "malgun.ttf"  # 또는 "NanumGothic.ttf"
 font = ImageFont.truetype(font_path, 30)
 
-# 모델 로드
-model = tf.keras.models.load_model(model_path)
+# TFLite 모델 로드
+interpreter = tf.lite.Interpreter(model_path=model_path)
+interpreter.allocate_tensors()
+
+# 입력 및 출력 텐서 정보 가져오기
+input_details = interpreter.get_input_details()
+output_details = interpreter.get_output_details()
 
 # MediaPipe 모델 로드
 mp_holistic = mp.solutions.holistic
@@ -74,10 +79,14 @@ while cap.isOpened():
         if len(seq) > seq_length:
             seq.pop(0)
 
-        # 예측 수행
+        # 예측 수행 (TFLite 모델 사용)
         if len(seq) == seq_length:
-            input_data = np.expand_dims(np.array(seq), axis=0)
-            prediction = model.predict(input_data)[0]
+            input_data = np.expand_dims(np.array(seq), axis=0).astype(np.float32)
+
+            interpreter.set_tensor(input_details[0]['index'], input_data)
+            interpreter.invoke()
+            prediction = interpreter.get_tensor(output_details[0]['index'])[0]
+
             predicted_action = actions[np.argmax(prediction)]
             confidence = np.max(prediction)
 
