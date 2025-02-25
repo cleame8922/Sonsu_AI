@@ -99,5 +99,9 @@ def index():
 def video_feed():
     return Response(process_frame(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
+@app.route('/login')
+def a():
+    return render_template('a.html')
+
 if __name__ == '__main__':
     app.run(debug=True)

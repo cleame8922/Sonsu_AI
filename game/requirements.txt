@@ -1,12 +1,8 @@
 pandas
-plotly
 numpy
 openai
-nltk
 Pillow
 tensorflow
 opencv-python
 mediapipe
-matplotlib
-SpeechRecognition
 requests

@@ -1,0 +1,9 @@
+cryptography
+Flask
+Flask-SQLAlchemy
+Flask-Cors
+tensorflow
+opencv
+numpy
+mediapipe
+PIL
