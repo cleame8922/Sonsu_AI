@@ -3,8 +3,34 @@ import mediapipe as mp
 import numpy as np
 import time, os
 
-actions = ['말',
-    '곱다']  # 학습할 수어 동작
+actions = [
+    '안녕하세요',
+    '감사합니다',
+    '사랑합니다',
+    '어머니',
+    '아버지',
+    '동생',
+    '잘',
+    '못',
+    '간다',
+    '나',
+    '이름',
+    '만나다',
+    '반갑다',
+    '부탁',
+    '학교',
+    '생일',
+    '월',
+    '일',
+    '나이',
+    '고발',
+    '복습',
+    '학습',
+    '눈치채다',
+    '오다',
+    '말',
+    '곱다'
+]  # 학습할 수어 동작
 seq_length = 30  # 시퀀스 길이
 secs_for_action = 30  # 각 동작을 30초 동안 촬영
 
@@ -30,7 +56,7 @@ while cap.isOpened():
         cv2.putText(img, f'Waiting for collecting {action.upper()} action...', org=(10, 30),
                     fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=1, color=(255, 255, 255), thickness=2)
         cv2.imshow('img', img)
-        cv2.waitKey(3000)
+        cv2.waitKey(10000)
 
         start_time = time.time()
 

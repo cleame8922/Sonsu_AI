@@ -154,7 +154,7 @@ def get_prediction():
 @app.route('/video_feed')
 def video_feed():
     # 비디오 스트리밍 응답 헤더에 CORS 설정 추가
-    return Response(process_frame(), 
+    return Response(process_frame(),
                     mimetype='multipart/x-mixed-replace; boundary=frame',
                     headers={
                         'Access-Control-Allow-Origin': '*',  # 모든 origin 허용

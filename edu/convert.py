@@ -1,7 +1,7 @@
 import tensorflow as tf
 
 # 모델 로드
-loaded_model = tf.keras.models.load_model("model.h5")  # 모델 경로 확인
+loaded_model = tf.keras.models.load_model("models/model1.h5")  # 모델 경로 확인
 
 # TFLite 변환기 생성
 converter = tf.lite.TFLiteConverter.from_keras_model(loaded_model)
@@ -16,7 +16,7 @@ converter.target_spec.supported_ops = [
 tflite_model = converter.convert()
 
 # 변환된 모델 저장
-with open("model.tflite", "wb") as f:
+with open("model1.tflite", "wb") as f:
     f.write(tflite_model)
 
 print("변환 완료: model.tflite 저장됨.")

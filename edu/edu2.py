@@ -5,8 +5,8 @@ import tensorflow as tf
 from PIL import ImageFont, ImageDraw, Image
 
 # 모델 및 데이터 정보
-model_path = 'model.tflite'  # TFLite 모델 경로
-actions = ['안녕하세요', '사랑합니다', '감사합니다']  # 학습한 동작 리스트
+model_path = 'model1.tflite'  # TFLite 모델 경로
+actions = ['학교','안녕','안녕하세요', '사랑합니다', '감사합니다']  # 학습한 동작 리스트
 seq_length = 30  # 모델 학습 시 사용한 시퀀스 길이
 
 # 한글 폰트 설정
