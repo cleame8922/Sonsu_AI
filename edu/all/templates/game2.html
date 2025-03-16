@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>수어 챌린지 - 게임 2</title>
+    <style>
+        body {
+            font-family: 'Pretendard', sans-serif;
+            text-align: center;
+            background-color: #e3f2fd;
+        }
+        h1 {
+            color: #1e88e5;
+        }
+        .container {
+            margin-top: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+        .video-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .question {
+            font-size: 22px;
+            font-weight: bold;
+            margin: 15px;
+            color: #1565c0;
+        }
+        .result {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 15px;
+            color: #43a047;
+        }
+        .btn {
+            background-color: #43a047;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 25px;
+            transition: 0.3s;
+        }
+        .btn:hover {
+            background-color: #2e7d32;
+        }
+    </style>
+</head>
+<body>
+    <h1>수어 챌린지 - 게임 1</h1>
+    <div class="container">
+        <div class="video-container">
+            <img id="videoFeed" src="/game2/video_feed" width="640" height="480">
+            <p class="question" id="questionText">챌린지 문제: </p>
+            <p class="result" id="gameResult">결과: </p>
+            <button class="btn" onclick="fetchQuestion()">새로운 챌린지</button>
+        </div>
+    </div>
+
+    <script>
+        // 페이지 로드 시 초기 문제 가져오기
+        function fetchQuestion() {
+            fetch('/game2/get_question')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('questionText').innerText = "챌린지 문제: " + data.question;
+                    document.getElementById('gameResult').innerText = "결과: ";
+                })
+                .catch(error => console.error('문제 가져오기 오류:', error));
+        }
+
+        // 게임 상태 주기적으로 확인하기
+        function checkGameStatus() {
+            // 처음 문제 가져오기
+            fetchQuestion();
+            
+            // 주기적으로 결과 확인
+            setInterval(() => {
+                fetch('/game2/get_game_info')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.question) {
+                            document.getElementById('questionText').innerText = "챌린지 문제: " + data.question;
+                        }
+                        if (data.game_result) {
+                            document.getElementById('gameResult').innerText = "결과: " + data.game_result;
+                            
+                            // 결과에 따라 색상 변경
+                            if (data.game_result.includes("정답")) {
+                                document.getElementById('gameResult').style.color = "#43a047"; // 초록색
+                            } else if (data.game_result.includes("틀림")) {
+                                document.getElementById('gameResult').style.color = "#e53935"; // 빨간색
+                            } else {
+                                document.getElementById('gameResult').style.color = "#1565c0"; // 파란색
+                            }
+                        }
+                    })
+                    .catch(error => console.error('게임 상태 가져오기 오류:', error));
+            }, 500); // 0.5초마다 상태 확인
+        }
+
+        // 페이지 로드 시 실행
+        window.onload = checkGameStatus;
+    </script>
+</body>
+</html>
